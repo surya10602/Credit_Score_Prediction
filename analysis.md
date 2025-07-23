@@ -40,4 +40,6 @@
 2. Median time between borrow and repay: -86.0 hours
 3. Most common asset: USDC
 
+---
+
 <img width="1680" height="720" alt="behavior_comparison" src="https://github.com/user-attachments/assets/ba236abf-aed7-43c3-8261-cda155d5f1f4" />
