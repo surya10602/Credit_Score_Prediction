@@ -87,6 +87,8 @@ pip install pandas numpy matplotlib scikit-learn
 ---
 
 ## Run the python code:
+> [!WARNING]
+> Make sure that the json input_file path is specified properly.
 ```bash
 python credit_score.py
 ```
