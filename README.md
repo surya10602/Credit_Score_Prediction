@@ -1,4 +1,4 @@
-# Credit_Score_Prediction
+# Credit Scoring System
 A machine learning-based credit scoring system that evaluates wallet addresses interacting with Aave V2, generating credit scores from 0-1000 based on transaction behavior patterns.
 
 ## Features:
@@ -80,5 +80,5 @@ python credit_score_predict.py
 ```
 
 ## Output:
-- credit_score.json: contains the credit score for each id
--  
+- credit_score.json: contains the credit score for each wallet.
+- score_distribution.png: a graph, representing credit scores vs number of wallets.
