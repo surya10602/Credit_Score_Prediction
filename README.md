@@ -1,11 +1,16 @@
 # Credit Scoring System
+
 A machine learning-based credit scoring system that evaluates wallet addresses interacting with Aave V2, generating credit scores from 0-1000 based on transaction behavior patterns.
+
+---
 
 ## Features:
 - **Transaction Analysis**: Processes deposit, borrow, repay, redeem, and liquidation events
 - **Risk Scoring**: Generates scores from 0-1000 with clear risk categories
 - **Anomaly Detection**: Identifies suspicious behavior using Isolation Forest
 - **Visual Reporting**: Automatic generation of score distribution charts
+
+---
 
 ## Methodology
 ### Score Calculation Approach
@@ -29,6 +34,8 @@ A machine learning-based credit scoring system that evaluates wallet addresses i
 3. **Scores scaled to 0-1000 range using MinMaxScaler**
 
 4. **Isolation Forest for anomaly detection**
+
+---
 
 ## System Architecture/Processing Flow:
 
@@ -70,14 +77,21 @@ features = {
 
 - Final Score: MinMaxScaler(0-1000)
 
+---
+
 ## Installation:
 ```bash
 pip install pandas numpy matplotlib scikit-learn
 ```
+
+---
+
 ## Run the python code:
 ```bash
 python credit_score.py
 ```
+
+---
 
 ## Output:
 - credit_score.json: contains the credit score for each wallet.
