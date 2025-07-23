@@ -1,6 +1,12 @@
 # Credit_Score_Prediction
 A machine learning-based credit scoring system that evaluates wallet addresses interacting with Aave V2, generating credit scores from 0-1000 based on transaction behavior patterns.
 
+## Features:
+- **Transaction Analysis**: Processes deposit, borrow, repay, redeem, and liquidation events
+- **Risk Scoring**: Generates scores from 0-1000 with clear risk categories
+- **Anomaly Detection**: Identifies suspicious behavior using Isolation Forest
+- **Visual Reporting**: Automatic generation of score distribution charts
+
 ## Methodology
 ### Score Calculation Approach
 1. **Feature Engineering**:
@@ -24,30 +30,55 @@ A machine learning-based credit scoring system that evaluates wallet addresses i
 
 4. **Isolation Forest for anomaly detection**
 
-## System Architecture:
+## System Architecture/Processing Flow:
 
-<img width="400" height="600" alt="system_architecture" src="https://github.com/user-attachments/assets/44cf2185-7dfe-4948-8571-eae27fa5701f" />
+```mermaid
+graph TD
+    A[Raw Transaction Data] --> B[Data Preprocessing]
+    B --> C[Feature Engineering]
+    C --> D[Scoring Engine]
+    D --> E[Results Visualization]
+    D --> F[credit_scores.json]
+    E --> G[Distribution Charts]
+```
+### Components:
 
-#### Data Pipeline:
+#### 1. Data Processing:
 
-- Input: Aave V2 transaction JSON
+- Extracts transaction values and timestamps
 
-- Processing: Clean, normalize, and extract features
+- Normalizes JSON data structure
 
-- Output: Processed DataFrame with engineered features
+- Calculates USD values for all transactions
 
-#### Scoring Engine:
+#### 2. Feature Engine:
+```python
+features = {
+    'tx_count': Transaction frequency,
+    'total_value': USD volume,
+    'age_days': Wallet activity duration,
+    'tx_freq': tx_count/age_days+1,
+    'repayment_time': Borrow-repay latency,
+    'tx_ratios': Action type distribution
+}
+```
+#### 3. Scoring Model:
 
-- Calculates base score components
+- Positive Factors: Activity level, longevity, repayment speed
 
-- Applies penalties for risky behavior
+- Negative Factors: Liquidations, high borrowing, anomalies
 
-- Normalizes final scores
+- Final Score: MinMaxScaler(0-1000)
 
-#### Analysis Module:
+## Installation:
+```bash
+pip install pandas numpy matplotlib scikit-learn
+```
+## Run the python code:
+```bash
+python credit_score_predict.py
+```
 
-- Generates distribution visualizations
-
-- Comparative behavior analysis
-
-- Risk category breakdowns
+## Output:
+- credit_score.json: contains the credit score for each id
+-  
