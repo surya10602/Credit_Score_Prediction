@@ -76,7 +76,7 @@ pip install pandas numpy matplotlib scikit-learn
 ```
 ## Run the python code:
 ```bash
-python credit_score_predict.py
+python credit_score.py
 ```
 
 ## Output:
