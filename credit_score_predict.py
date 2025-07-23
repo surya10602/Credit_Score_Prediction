@@ -1,6 +1,7 @@
 import json
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from datetime import datetime
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import IsolationForest
@@ -120,4 +121,69 @@ def calculate_credit_scores(input_file, output_file):
     
     return result_dict
 
-calculate_credit_scores('user-wallet-transactions.json', 'credit_score.json')
+
+import json
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_score_distribution(score_file, output_image='score_distribution.png'):
+    try:
+        with open(score_file) as f:
+            scores = json.load(f)
+        
+        df = pd.DataFrame.from_dict(scores, orient='index', columns=['score'])
+        
+        plt.style.use('ggplot')
+        
+        fig, ax = plt.subplots(figsize=(10, 6))
+        
+        bins = np.arange(0, 1100, 100)
+        labels = [f"{i}-{i+99}" for i in range(0, 1000, 100)]
+        df['range'] = pd.cut(df['score'], bins=bins, labels=labels, right=False)
+        counts = df['range'].value_counts().sort_index()
+        
+        colors = []
+        for label in counts.index:
+            score_min = int(label.split('-')[0])
+            if score_min < 400:
+                colors.append('#ff6b6b')  
+            elif score_min >= 800:
+                colors.append('#51cf66')  
+            else:
+                colors.append('#fcc419')  
+        
+        bars = ax.bar(counts.index, counts.values, color=colors, edgecolor='white', linewidth=0.7)
+        
+        ax.set_title('Aave V2 Wallet Credit Score Distribution', pad=20, fontsize=14)
+        ax.set_xlabel('Score Range', labelpad=10)
+        ax.set_ylabel('Number of Wallets', labelpad=10)
+        ax.grid(axis='y', linestyle='--', alpha=0.7)
+        
+        plt.xticks(rotation=45, ha='right')
+        
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{int(height)}',
+                    ha='center', va='bottom')
+        
+        plt.tight_layout()
+        
+        plt.savefig(output_image, dpi=120, bbox_inches='tight')
+        
+        plt.show()
+        
+        plt.close()
+        
+        print(f"Successfully generated and displayed {output_image}")
+        return True
+    
+    except Exception as e:
+        print(f"Error generating graph: {str(e)}")
+        return False
+
+
+if __name__ == "__main__":
+    calculate_credit_scores('user-wallet-transactions.json', 'credit_score.json')
+    plot_score_distribution('credit_score.json')
